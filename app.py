@@ -19,6 +19,29 @@ def resultados():
 def calcular():
     return render_template('formulario.html')
 
+    if request.method == 'Post':    
+        nome = request.form.get('nome', 'Não foi enviado um nome')
+        peso =  request.form.get('peso')
+        altura = request.form.get('altura')
+
+        peso = float(peso)
+        altura = float(altura)
+        
+        imc = round (peso / (altura ** 2), 2)
+
+        if imc < 18.5:
+            classificacao = 'Abaixo do peso'
+        elif imc < 25:
+            classificacao = 'Peso normal'
+            ## Adicionar as demais classificações
+        else:
+            classificacao = 'Erro do Cálculo do IMC'
+
+        flash (f'Olá {nome}, seu IMC é: {imc} - Classificação: {classificacao}', 'success')
+
+        return redirect(url_for('resultados'))
+
+    return render_template('formulario.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
