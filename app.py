@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-
+from db import execute_query
 app = Flask(__name__)
 app.secret_key = 'imc_secret_key_2026'
 

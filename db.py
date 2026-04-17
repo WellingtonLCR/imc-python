@@ -18,3 +18,27 @@ _pool = pool.MysqConnectionPool(
     pool_size = 5,
     **DB_PARAMS
 )
+
+def get_connection():
+    try:
+        return _pool.get_connection()
+        except Error as e:
+            raise Exception(f'Erro ao obter conexãao do pool:{e}')
+
+def execute_query(sql, params=None, fetch=False)
+    conn = get_connection()
+    try:
+        cusor = conn.cusor(dictionary=True)
+        cusor.execute(sql, params or ())
+
+        if fetch
+        return cusor.fetchall()
+        else conn.commit()
+        return cursor.rowcout
+
+try:
+    except Error as e:
+        conn.rollback(f'Erro ao executar a query:{e}')
+        finnaly:
+        cusor.close()
+        conn.close()
