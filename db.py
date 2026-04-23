@@ -45,3 +45,7 @@ def execute_query(sql, params=None, fetch=False):
     finally:
         cursor.close()
         conn.close()
+
+def execute_one (sql, params=None):
+    resultados = execute_one = execute_query(sql, params, fetch=True)
+    return resultados[0] if resultados else None

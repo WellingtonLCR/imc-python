@@ -7,9 +7,21 @@ app.secret_key = 'imc_secret_key_2026'
 
 @app.route('/')
 def index():
-    sql = "SHOW TABLES;"
+    sql = '''
+CREATE TABLE IF NOT EXISTIS calculos(
+    id_calculos BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    peso  DECIMAL(6,2) NOT NULL,
+    altura DECIMAL(5,2) NOT NULL,
+
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    alterado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    deletado_em DATETIME NULL
+);
+'''
     resultados = execute_query(sql, fetch=True)
     print(resultados)
+    
     return render_template('index.html')
 
 
