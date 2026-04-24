@@ -7,7 +7,6 @@ DB_PARAMS = {
     'password': '',
     'database': 'bd_imc',
     'charset': 'utf8mb4',
-    'time_zone': '-03:00',
     'use_pure': True,
     'connect_timeout': 10
 }
@@ -18,9 +17,18 @@ _pool = pooling.MySQLConnectionPool(
     **DB_PARAMS
 )
 
+
 def get_connection():
     try:
-        return _pool.get_connection()
+        conn = _pool.get_connection()
+
+        # opcional: definir timezone aqui
+        cursor = conn.cursor()
+        cursor.execute("SET time_zone = '-03:00'")
+        cursor.close()
+
+        return conn
+
     except Error as e:
         raise Exception(f'Erro ao obter conexão do pool: {e}')
 
@@ -46,6 +54,7 @@ def execute_query(sql, params=None, fetch=False):
         cursor.close()
         conn.close()
 
-def execute_one (sql, params=None):
-    resultados = execute_one = execute_query(sql, params, fetch=True)
+
+def execute_one(sql, params=None):
+    resultados = execute_query(sql, params, fetch=True)
     return resultados[0] if resultados else None
